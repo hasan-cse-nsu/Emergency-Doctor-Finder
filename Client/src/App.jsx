@@ -7,14 +7,21 @@ import AboutPage from "./page/AboutPage";
 import ContactPage from "./page/ContactPage";
 import DashboardPage from "./page/DashboardPage";
 import DoctorsBySpecialty from "./page/DoctorsBySpecialty";
+import Signup from "./page/Signup";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import UserHomePage from "./page/UserHomePage";
 
 function App() {
   return (
     <>
       <BrowserRouter>
+        <ToastContainer position="top-center" autoClose={3000} />
+
         <Routes>
           <Route exact path="/" element={<HomePage />} />
           <Route exact path="/login" element={<LoginPage />} />
+          <Route exact path="/userHome" element={<UserHomePage />} />
           <Route exact path="/doctors" element={<DrPage />} />
           <Route path="/doctors/:id" element={<DoctorDetail />} />
           <Route
@@ -24,6 +31,8 @@ function App() {
           <Route exact path="/about" element={<AboutPage />} />
           <Route exact path="/contact" element={<ContactPage />} />
           <Route exact path="/dashboard" element={<DashboardPage />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/login" element={<LoginPage />} />
         </Routes>
       </BrowserRouter>
     </>

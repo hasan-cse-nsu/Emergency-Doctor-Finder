@@ -2,25 +2,29 @@
 /* eslint-disable react/no-unescaped-entities */
 /* eslint-disable no-unused-vars */
 import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const LoginForm = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [form, setForm] = useState({ email: "", password: "" });
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleChange = (e) =>
+    setForm({ ...form, [e.target.name]: e.target.value });
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (email === "blogproject@gmail.com" && password === "qwerty") {
-      handleLogin();
-    } else {
-      alert("Login Unsuccessfull.");
+    try {
+      const res = await axios.post("http://localhost:3030/api/login", form);
+      localStorage.setItem("token", res.data.result.data.token);
+      toast.success("✅ Login successful! ");
+      setTimeout(() => navigate("/userHome"), 1500);
+    } catch (err) {
+      toast.error(err.res?.data?.msg || "❌ Email or Password invalid");
     }
   };
 
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  const handleLogin = () => {
-    setIsLoggedIn(true);
-  };
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-sm">
@@ -37,11 +41,8 @@ const LoginForm = () => {
               Email
             </label>
             <input
-              type="email"
-              id="email"
               name="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={handleChange}
               required
               className="w-full mt-2 p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
               placeholder="Enter your email"
@@ -57,10 +58,8 @@ const LoginForm = () => {
             </label>
             <input
               type="password"
-              id="password"
               name="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={handleChange}
               required
               className="w-full mt-2 p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
               placeholder="Enter your password"
@@ -76,10 +75,10 @@ const LoginForm = () => {
         </form>
 
         <div className="mt-4 text-center">
-          <span className="text-sm text-gray-600">Don't have an account?</span>
-          <a href="#" className="text-sm text-blue-600 hover:underline">
+          <span className="text-sm text-gray-600">Don't have an account? </span>
+          <Link to="/signup" className="text-sm text-blue-600 hover:underline">
             Sign Up
-          </a>
+          </Link>
         </div>
       </div>
     </div>

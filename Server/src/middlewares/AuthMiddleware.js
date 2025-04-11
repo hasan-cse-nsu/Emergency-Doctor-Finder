@@ -1,17 +1,18 @@
-export default (req, res, next) => {
+import jwt from 'jsonwebtoken';
+import { JWT_KEY } from "../config/config.js";
 
-    let token = req.headers["token"];
-    let decoded = DecodeToken(token);
-    if (decoded===null) {
-        res.status(401).send({status : "fail", message : "unathorized" })
-    } else {
-        let phoneNumber = decoded.phoneNumber;
-        let userId = decoded.userId;
+export default function auth(req, res, next) {
+  const token = req.header('Authorization')?.split(" ")[1];
 
-        req.headers.phoneNumber = phoneNumber;
-        req.headers.userId = userId;
+  if (!token) {
+    return res.status(401).json({ msg: 'No token, authorization denied' });
+  }
 
-        next(); // if validation ok then do the next work.
-    }
-
+  try {
+    const decoded = jwt.verify(token, JWT_KEY); 
+    req.user = decoded.id; 
+    next(); 
+  } catch (err) {
+    return res.status(400).json({ msg: 'Invalid token' });
+  }
 }

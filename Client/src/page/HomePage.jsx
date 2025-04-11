@@ -5,11 +5,9 @@ import DoctorSearch from "../components/DoctorSearch";
 import SpecialtySearch from "../components/SpecialtySearch";
 
 const HomePage = () => {
-  let [list, setList] = useState([]);
-
-  useEffect(() => {
-    (async () => {})();
-  }, []);
+  // useEffect(() => {
+  //   (async () => {})();
+  // }, []);
 
   return (
     <>
