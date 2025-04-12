@@ -21,7 +21,7 @@ const LoginForm = () => {
       toast.success("✅ Login successful! ");
       setTimeout(() => navigate("/userHome"), 1500);
     } catch (err) {
-      toast.error(err.res?.data?.msg || "❌ Email or Password invalid");
+      toast.error(err.response?.data?.msg || "❌ Email or Password invalid");
     }
   };
 

@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const UserHomePage = () => {
   const navigate = useNavigate();
@@ -25,6 +25,12 @@ const UserHomePage = () => {
       >
         Logout
       </button>
+      <Link
+        to="/updateUser"
+        className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+      >
+        Update Profile
+      </Link>
     </div>
   );
 };

@@ -40,3 +40,29 @@ export const getUserService = async (req) => {
       }
 
 }
+
+
+export const getUserByIDService = async (req) => {
+    try {
+        const data = await UserModel.findById(req.user).select('-password');
+        return { status : "Success", data : data}
+    } catch (e) {
+        return { status : "Error", error : e.toString()}
+
+    }
+}
+
+
+export const userUpdateService = async (req) => {
+    try {
+        const { name, phone, location } = req.body;
+        const updatedUser = await UserModel.findByIdAndUpdate(
+        req.user,
+        { name, phone, location },
+        { new: true }
+      );
+      return { status : "Success", data : updatedUser}
+    } catch (e) {
+        return { status : "Error", error : e.toString()}
+    }
+}
