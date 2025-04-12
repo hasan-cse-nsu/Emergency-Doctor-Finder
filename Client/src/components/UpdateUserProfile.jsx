@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const UpdateUserProfile = () => {
   const [form, setForm] = useState({
@@ -65,7 +65,7 @@ const UpdateUserProfile = () => {
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-100 to-blue-300">
       <div className="bg-white shadow-xl rounded-2xl p-10 w-full max-w-md">
         <h2 className="text-2xl font-bold text-center text-blue-700 mb-8">
-          Your Dashboard
+          Update Profile
         </h2>
 
         <div className="space-y-5">
@@ -121,12 +121,13 @@ const UpdateUserProfile = () => {
             />
           </div>
 
-          <button
+          <Link
+            to="/"
             onClick={handleUpdate}
-            className="w-full bg-blue-600 text-white py-2 rounded-md font-semibold hover:bg-blue-700 transition"
+            className="px-[135px] py-[9px] bg-blue-600 text-white rounded-md hover:bg-blue-700 transition"
           >
             Save Changes
-          </button>
+          </Link>
         </div>
       </div>
     </div>

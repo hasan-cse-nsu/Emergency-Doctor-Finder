@@ -10,7 +10,6 @@ import DoctorsBySpecialty from "./page/DoctorsBySpecialty";
 import Signup from "./page/Signup";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import UserHomePage from "./page/UserHomePage";
 import UpdateUserProfile from "./components/UpdateUserProfile";
 
 function App() {
@@ -22,8 +21,8 @@ function App() {
         <Routes>
           <Route exact path="/" element={<HomePage />} />
           <Route exact path="/login" element={<LoginPage />} />
-          <Route exact path="/userHome" element={<UserHomePage />} />
           <Route exact path="/updateUser" element={<UpdateUserProfile />} />
+          <Route path="/dashboard" element={<DashboardPage />} />
           <Route exact path="/doctors" element={<DrPage />} />
           <Route path="/doctors/:id" element={<DoctorDetail />} />
           <Route

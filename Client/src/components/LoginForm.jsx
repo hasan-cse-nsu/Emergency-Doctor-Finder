@@ -19,7 +19,7 @@ const LoginForm = () => {
       const res = await axios.post("http://localhost:3030/api/login", form);
       localStorage.setItem("token", res.data.result.data.token);
       toast.success("✅ Login successful! ");
-      setTimeout(() => navigate("/userHome"), 1500);
+      setTimeout(() => navigate("/"), 1500);
     } catch (err) {
       toast.error(err.response?.data?.msg || "❌ Email or Password invalid");
     }
