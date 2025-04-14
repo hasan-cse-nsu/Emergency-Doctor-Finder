@@ -1,15 +1,17 @@
 import mongoose from "mongoose"
 
-const DataSchema = mongoose.Schema(
+const DoctorSchema = mongoose.Schema(
     {
         name: { type: String, required: true },
         specialty: { type: String, required: true },
         contact: { type: String, required: true },
         location: { type: String, required: true },
-        availability: { 
-            type: String, 
-            required: true 
-        },
+        availability: [
+          {
+            day: { type: String },
+            slots: [{ type: String }],
+          },
+        ],        
         experience: { type: String}, 
         image: { type: String},
     },
@@ -19,7 +21,7 @@ const DataSchema = mongoose.Schema(
     }
 )
 
-const DrModel = mongoose.model("drlists", DataSchema)
+const DrModel = mongoose.model("drlists", DoctorSchema)
 
 export default DrModel;
 

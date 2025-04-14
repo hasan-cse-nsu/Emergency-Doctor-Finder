@@ -1,4 +1,5 @@
 import DrModel from "../model/DrModel.js";
+import AppointmentModel from './../model/AppointmentModel.js';
 
 export const drService = async (req) => {
     try {
@@ -11,7 +12,7 @@ export const drService = async (req) => {
     }
 }
 
-export const getDrService = async (req) => {
+export const getDrService = async () => {
     try {
 
         let query = {};
@@ -52,5 +53,31 @@ export const getAllSpecialtiesService = async () => {
       return specialties;
     } catch (error) {
       return res.status(500).json({ error: 'Error fetching specialties' });
+    }
+  };
+
+
+export const postAppointmentsService = async (req) => {
+try {
+    const { dateTime } = req.body;
+    
+    const appointment = await AppointmentModel.create({
+        userId: req.user,
+        doctorId: req.params.doctorId,
+        dateTime: new Date(dateTime),
+    });
+    return { status : "Success", data : appointment}
+    } catch (e) {
+    return { status : "Error", error : e.toString()}
+    }
+}
+
+
+export const getAppointmentsService = async (req) => {
+    try {
+        const appointments = await AppointmentModel.find({ userId: req.user }).populate("doctorId");
+        return { status : "Success", data : appointments}
+      } catch (e) {
+        return { status : "Error", error : e.toString()}
     }
   };

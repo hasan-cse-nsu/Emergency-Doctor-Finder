@@ -16,6 +16,10 @@ router.get("/specialties", DrController.getAllSpecialties)
 router.get('/user/me', auth, UserController.getUserByID)
 router.put('/user/update', auth, UserController.userUpdate)
 
+router.post("/appointment/:doctorId", auth, DrController.postAppointments)
+router.get("/my-appointments", auth, DrController.getAppointments)
+
+
 router.post("/signup", UserController.postUsers)
 router.post("/login", UserController.getUsers)
 

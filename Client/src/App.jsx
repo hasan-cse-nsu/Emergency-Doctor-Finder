@@ -11,6 +11,8 @@ import Signup from "./page/Signup";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import UpdateUserProfile from "./components/UpdateUserProfile";
+import "react-datepicker/dist/react-datepicker.css";
+
 
 function App() {
   return (

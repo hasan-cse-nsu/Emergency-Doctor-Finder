@@ -1,4 +1,4 @@
-import { drService, getAllSpecialtiesService, getDrService, getSearchDrService } from '../service/DrService.js';
+import { drService, getAllSpecialtiesService, getAppointmentsService, getDrService, getSearchDrService, postAppointmentsService } from '../service/DrService.js';
 
 export const postDoctors = async (req, res) => {
 
@@ -8,7 +8,7 @@ export const postDoctors = async (req, res) => {
 
 export const getAllDoctors= async (req, res)=>{
     
-    let result = await getDrService(req);
+    let result = await getDrService();
     return res.json({result});
 }
 
@@ -25,5 +25,23 @@ export const getAllSpecialties= async (req, res)=>{
 }
 
 
+export const postAppointments= async (req, res)=>{
+    
+    let result = await postAppointmentsService(req);
+    if (result.status === "Error") {
+        return res.status(400).json({ msg: result.error });
+      }
+      return res.status(201).json({ result });
+}
+
+
+export const getAppointments= async (req, res)=>{
+    
+    let result = await getAppointmentsService(req);
+    if (result.status === "Error") {
+        return res.status(400).json({ msg: result.error });
+      }
+      return res.status(201).json({ result });
+}
 
 

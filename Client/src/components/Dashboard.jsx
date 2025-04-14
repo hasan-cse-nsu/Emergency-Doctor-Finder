@@ -9,6 +9,10 @@ const Dashboard = () => {
   const [user, setUser] = useState({});
   const navigate = useNavigate();
 
+  const [appointments, setAppointments] = useState([]);
+
+  // For getting Userdata
+
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) return navigate("/login");
@@ -23,6 +27,20 @@ const Dashboard = () => {
         navigate("/login");
       });
   }, [navigate]);
+
+  // For getting Appointments
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) return navigate("/login");
+
+    axios
+      .get("http://localhost:3030/api/my-appointments", {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((res) => setAppointments(res.data.result.data))
+      .catch(() => toast.error("Failed to fetch appointments"));
+  }, []);
 
   return (
     <Layout>
@@ -55,6 +73,19 @@ const Dashboard = () => {
               ✏️ Edit Profile
             </Link>
           </div>
+
+          <h3 className="text-xl font-semibold mb-2">Your Appointments</h3>
+
+          <ul className="space-y-2">
+            {appointments.map((appt) => (
+              <li key={appt._id} className="border p-4 rounded bg-white shadow">
+                <strong>Doctor: </strong> {appt.doctorId.name} <br />
+                <strong>Specialty: </strong> {appt.doctorId.specialty} <br />
+                <strong>Booked On: </strong>
+                {new Date(appt.dateTime).toLocaleString()}
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </Layout>
