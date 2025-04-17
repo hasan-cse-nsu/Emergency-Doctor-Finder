@@ -44,7 +44,7 @@ export const getUserService = async (req) => {
 
 export const getUserByIDService = async (req) => {
     try {
-        const data = await UserModel.findById(req.user).select('-password');
+        const data = await UserModel.findById(req.id).select('-password');
         return { status : "Success", data : data}
     } catch (e) {
         return { status : "Error", error : e.toString()}
@@ -57,7 +57,7 @@ export const userUpdateService = async (req) => {
     try {
         const { name, phone, location } = req.body;
         const updatedUser = await UserModel.findByIdAndUpdate(
-        req.user,
+        req.id,
         { name, phone, location },
         { new: true }
       );

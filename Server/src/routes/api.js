@@ -7,7 +7,12 @@ import auth from "../middlewares/AuthMiddleware.js";
 const router = express.Router();
 
 
-router.post("/postDoctors", DrController.postDoctors)
+router.post("/doctor/signup", DrController.postDoctors)
+router.post("/doctor/login", DrController.getDoctors)
+
+router.get('/doctor/me', auth, DrController.getDoctorByID)
+// router.put('/doctor/update', auth, DrController.userUpdate)
+
 router.get("/getAllDoctors", DrController.getAllDoctors)
 
 router.get("/search", DrController.getSearchDoctors)
@@ -22,6 +27,7 @@ router.get("/my-appointments", auth, DrController.getAppointments)
 
 router.post("/signup", UserController.postUsers)
 router.post("/login", UserController.getUsers)
+
 
 router.post("/postTeamMember", TeamController.postTeamMember)
 router.get("/getTeamMember", TeamController.getTeamMember)

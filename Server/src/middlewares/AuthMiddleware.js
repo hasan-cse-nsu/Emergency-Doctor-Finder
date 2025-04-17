@@ -10,7 +10,7 @@ export default function auth(req, res, next) {
 
   try {
     const decoded = jwt.verify(token, JWT_KEY); 
-    req.user = decoded.id; 
+    req.id = decoded.id; 
     next(); 
   } catch (err) {
     return res.status(400).json({ msg: 'Invalid token' });

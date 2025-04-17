@@ -2,7 +2,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import HomePage from "./page/HomePage";
 import LoginPage from "./page/LoginPage";
 import DrPage from "./page/DrPage";
-import DoctorDetail from "./page/DoctorDetail";
 import AboutPage from "./page/AboutPage";
 import ContactPage from "./page/ContactPage";
 import DashboardPage from "./page/DashboardPage";
@@ -12,7 +11,9 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import UpdateUserProfile from "./components/UpdateUserProfile";
 import "react-datepicker/dist/react-datepicker.css";
-
+import DoctorDetailPage from "./page/DoctorDetailPage";
+import DoctorSignupPage from "./page/DoctorSignupPage";
+import DoctorLoginPage from "./page/DoctorLoginPage";
 
 function App() {
   return (
@@ -22,11 +23,10 @@ function App() {
 
         <Routes>
           <Route exact path="/" element={<HomePage />} />
-          <Route exact path="/login" element={<LoginPage />} />
           <Route exact path="/updateUser" element={<UpdateUserProfile />} />
           <Route path="/dashboard" element={<DashboardPage />} />
           <Route exact path="/doctors" element={<DrPage />} />
-          <Route path="/doctors/:id" element={<DoctorDetail />} />
+          <Route path="/doctors/:id" element={<DoctorDetailPage />} />
           <Route
             path="/specialty/:specialty"
             element={<DoctorsBySpecialty />}
@@ -36,6 +36,9 @@ function App() {
           <Route exact path="/dashboard" element={<DashboardPage />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<LoginPage />} />
+
+          <Route path="/doctor/signup" element={<DoctorSignupPage />} />
+          <Route path="/doctor/login" element={<DoctorLoginPage />} />
         </Routes>
       </BrowserRouter>
     </>

@@ -1,12 +1,11 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 
 import React, { useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
 import { getAllDoctors } from "../apiRequest/api";
 import AppointmentModal from "../components/AppointmentModal";
 
-const DoctorDetail = () => {
-  const { id } = useParams();
+const DoctorDetail = (props) => {
   const [doctor, setDoctor] = useState([]);
 
   const [showModal, setShowModal] = useState(false);
@@ -17,7 +16,7 @@ const DoctorDetail = () => {
   useEffect(() => {
     (async () => {
       let res = await getAllDoctors();
-      const drData = res.filter((dr) => dr._id === id);
+      const drData = res.filter((dr) => dr._id === props.id);
       setDoctor(drData[0]);
     })();
   }, []);

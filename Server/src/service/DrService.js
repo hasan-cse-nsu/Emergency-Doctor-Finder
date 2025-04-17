@@ -1,18 +1,59 @@
 import DrModel from "../model/DrModel.js";
+import bcrypt from "bcryptjs"
+import jwt from "jsonwebtoken"
+import { JWT_KEY } from "../config/config.js";
 import AppointmentModel from './../model/AppointmentModel.js';
 
-export const drService = async (req) => {
+export const postDrService = async (req) => {
+    const { name, email, password } = req.body;
+
     try {
-        let reqBody = req.body;
-        let data = await DrModel.create(reqBody);
+        const existingDoctor = await DrModel.findOne({ email });
+        if (existingDoctor) 
+            return { status : "Error", error : 'Doctor already exists'}
+    
+        const hashed = await bcrypt.hash(password, 10);
+        const data = await DrModel.create({ name, email, password: hashed });
+    
         return { status : "Success", data : data}
     }catch (e) {
+        return { status : "Error", error : e.toString()}
+    }
+}
+
+
+export const getDrService = async (req) => {
+    const { email, password } = req.body;
+    try {
+        const doctor = await DrModel.findOne({ email });
+        if (!doctor) return { status : "Error", error : 'Doctor not found'}
+    
+        const isMatch = await bcrypt.compare(password, doctor.password);
+        if (!isMatch) return { status : "Error", error : 'Password mismatch'}
+    
+        const token = jwt.sign({ id: doctor._id }, JWT_KEY, { expiresIn: '1d' });
+    
+        const data = ({ token, doctor: { id: doctor._id, name: doctor.name, email: doctor.email } });
+
+        return { status : "Success", data : data}
+      } catch (e) {
+        return { status : "Error", error : e.toString()}
+      }
+
+}
+
+
+export const getDrByIDService = async (req) => {
+    try {
+        const data = await DrModel.findById(req.id).select('-password');
+        return { status : "Success", data : data}
+    } catch (e) {
         return { status : "Error", error : e.toString()}
 
     }
 }
 
-export const getDrService = async () => {
+export const getAllDrService = async () => {
     try {
 
         let query = {};
@@ -62,7 +103,7 @@ try {
     const { dateTime } = req.body;
     
     const appointment = await AppointmentModel.create({
-        userId: req.user,
+        userId: req.id,
         doctorId: req.params.doctorId,
         dateTime: new Date(dateTime),
     });
@@ -75,7 +116,7 @@ try {
 
 export const getAppointmentsService = async (req) => {
     try {
-        const appointments = await AppointmentModel.find({ userId: req.user }).populate("doctorId");
+        const appointments = await AppointmentModel.find({ userId: req.id }).populate("doctorId");
         return { status : "Success", data : appointments}
       } catch (e) {
         return { status : "Error", error : e.toString()}

@@ -2,10 +2,12 @@ import mongoose from "mongoose"
 
 const DoctorSchema = mongoose.Schema(
     {
+        email: { type: String, required: true, unique: true },
+        password: { type: String, required: true }, 
         name: { type: String, required: true },
-        specialty: { type: String, required: true },
-        contact: { type: String, required: true },
-        location: { type: String, required: true },
+        specialty: { type: String },
+        contact: { type: String },
+        location: { type: String },
         availability: [
           {
             day: { type: String },
@@ -14,6 +16,10 @@ const DoctorSchema = mongoose.Schema(
         ],        
         experience: { type: String}, 
         image: { type: String},
+        isApproved: {
+          type: Boolean,
+          default: false,
+        },
     },
     {
         timestamps: true,
