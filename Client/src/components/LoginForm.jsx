@@ -29,7 +29,7 @@ const LoginForm = () => {
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-sm">
         <h2 className="text-2xl font-semibold text-center text-gray-700 mb-6">
-          Login
+          User Login
         </h2>
 
         <form onSubmit={handleSubmit}>

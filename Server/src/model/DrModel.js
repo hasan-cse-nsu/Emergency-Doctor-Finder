@@ -13,7 +13,14 @@ const DoctorSchema = mongoose.Schema(
             day: { type: String },
             slots: [{ type: String }],
           },
-        ],        
+        ],
+        notifications: [
+          {
+            message: String,
+            date: { type: Date, default: Date.now },
+            read: { type: Boolean, default: false },
+          },
+        ],
         experience: { type: String}, 
         image: { type: String},
         isApproved: {

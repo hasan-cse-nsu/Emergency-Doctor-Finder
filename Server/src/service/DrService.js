@@ -5,7 +5,7 @@ import { JWT_KEY } from "../config/config.js";
 import AppointmentModel from './../model/AppointmentModel.js';
 
 export const postDrService = async (req) => {
-    const { name, email, password } = req.body;
+    const { name, email,specialty, password } = req.body;
 
     try {
         const existingDoctor = await DrModel.findOne({ email });
@@ -13,7 +13,7 @@ export const postDrService = async (req) => {
             return { status : "Error", error : 'Doctor already exists'}
     
         const hashed = await bcrypt.hash(password, 10);
-        const data = await DrModel.create({ name, email, password: hashed });
+        const data = await DrModel.create({ name, email, specialty, password: hashed });
     
         return { status : "Success", data : data}
     }catch (e) {
@@ -122,3 +122,64 @@ export const getAppointmentsService = async (req) => {
         return { status : "Error", error : e.toString()}
     }
   };
+
+
+  export const getPendingDoctorService = async (req) => {
+    try {
+        const doctors = await DrModel.find({ isApproved: false });
+        return { status : "Success", data : doctors}
+    } catch (e) {
+        return { status : "Error", error : e.toString()}
+
+    }
+}
+
+
+export const putApprovalDoctorService = async (req) => {
+    try {
+        const doctor = await DrModel.findById(req.params.id);
+        if (!doctor) return res.status(404).json({ msg: "Doctor not found" });
+
+        doctor.isApproved = true;
+        doctor.notifications.push({
+            message: "🎉 Your profile has been approved by the admin.",
+            date: new Date(),
+            read: false,
+    });
+
+    await doctor.save();
+
+
+        return { status : "Success", data : doctor}
+    } catch (e) {
+        return { status : "Error", error : e.toString()}
+
+    }
+}
+
+
+export const getNotificationsService = async (req) => {
+    try {
+        const doctor = await DrModel.findById(req.id);        
+        return { status : "Success", data : doctor.notifications || []}
+    } catch (e) {
+        return { status : "Error", error : e.toString()}
+
+    }
+}
+
+
+export const getMarkNotificationService = async (req) => {
+    try {
+        const doctor = await DrModel.findById(req.id);
+        doctor.notifications = doctor.notifications.map((n) => ({ ...n, read: true }));
+
+        await doctor.save();
+
+
+        return { status : "Success", data : doctor.notifications || []}
+    } catch (e) {
+        return { status : "Error", error : e.toString()}
+
+    }
+}
