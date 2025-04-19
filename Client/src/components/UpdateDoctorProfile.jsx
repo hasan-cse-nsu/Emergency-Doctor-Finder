@@ -12,7 +12,7 @@ const UpdateDoctorProfile = () => {
     contact: "",
     location: "",
     specialty: "",
-    availability: "",
+    availability: [{ day: "", slots: "" }],
     experience: "",
     image: "",
   });
@@ -70,11 +70,24 @@ const UpdateDoctorProfile = () => {
     }
   };
 
+  const handleAvailabilityChange = (index, field, value) => {
+    const updated = [...form.availability];
+    updated[index][field] = value;
+    setForm({ ...form, availability: updated });
+  };
+
+  const handleAddAvailability = () => {
+    setForm({
+      ...form,
+      availability: [...form.availability, { day: "", slots: "" }],
+    });
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-100 to-blue-300">
       <div className="bg-white shadow-xl rounded-2xl p-10 w-full max-w-md">
         <h2 className="text-2xl font-bold text-center text-blue-700 mb-8">
-          Update Profile
+          Update Doctor Profile
         </h2>
 
         <div className="space-y-5">
@@ -147,13 +160,38 @@ const UpdateDoctorProfile = () => {
             <label className="block text-sm font-medium text-gray-700">
               Availability
             </label>
-            <input
-              type="text"
-              name="availability"
-              value={form.availability}
-              onChange={handleChange}
-              className="w-full mt-1 px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-400 focus:outline-none"
-            />
+            {form.availability.map((a, index) => (
+              <div key={index} className="flex items-center space-x-4 mb-3">
+                <input
+                  type="text"
+                  name="day"
+                  placeholder="Day (e.g., Monday)"
+                  value={a.day}
+                  onChange={(e) =>
+                    handleAvailabilityChange(index, "day", e.target.value)
+                  }
+                  className="w-1/2 px-3 py-2 border border-gray-300 rounded-md"
+                />
+                <input
+                  type="text"
+                  name="slots"
+                  placeholder="e.g., 10:00 AM - 2:00 PM"
+                  value={a.slots}
+                  onChange={(e) =>
+                    handleAvailabilityChange(index, "slots", e.target.value)
+                  }
+                  className="w-1/2 px-3 py-2 border border-gray-300 rounded-md"
+                />
+              </div>
+            ))}
+
+            <button
+              type="button"
+              onClick={handleAddAvailability}
+              className="text-blue-600 text-sm mt-2"
+            >
+              + Add More Availability
+            </button>
           </div>
 
           <div>

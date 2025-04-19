@@ -11,7 +11,7 @@ const DoctorSchema = mongoose.Schema(
         availability: [
           {
             day: { type: String },
-            slots: [{ type: String }],
+            slots: { type: String },
           },
         ],
         notifications: [

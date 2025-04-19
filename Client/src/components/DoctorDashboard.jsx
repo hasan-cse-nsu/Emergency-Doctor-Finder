@@ -35,6 +35,12 @@ const DoctorDashboard = () => {
           </h2>
 
           <div className="grid grid-cols-1 gap-4 text-gray-700 text-base">
+            <img
+              src={doctor.image}
+              alt={doctor.name}
+              className="doctor-detail-img"
+            />
+
             <div>
               <strong>Name:</strong> {doctor.name}
             </div>
@@ -48,17 +54,34 @@ const DoctorDashboard = () => {
               <strong>Phone:</strong> {doctor.contact || "Not provided"}
             </div>
             <div>
-              <strong>location:</strong> {doctor.location || "Not set"}
+              <strong>Location:</strong> {doctor.location || "Not set"}
             </div>
             <div>
-              <strong>availability:</strong> {doctor.availability || "Not set"}
+              <strong>Availability:</strong>{" "}
+              {
+                <ul className="mt-2 list-disc text-gray-700 text-left">
+                  {Array.isArray(doctor.availability) &&
+                  doctor.availability.length > 0 ? (
+                    doctor.availability.map((item, index) => (
+                      <li key={index}>
+                        <span className="font-medium">{item.day}:</span>{" "}
+                        {item.slots || "Not specified"}
+                      </li>
+                    ))
+                  ) : (
+                    <li className="text-sm text-gray-500">
+                      No availability info
+                    </li>
+                  )}
+                </ul>
+              }
             </div>
             <div>
-              <strong>experience:</strong> {doctor.experience || "Not set"}
+              <strong>Experience:</strong> {doctor.experience || "Not set"}
             </div>
-            <div>
+            {/* <div>
               <strong>Image:</strong> {doctor.image || "Not set"}
-            </div>
+            </div> */}
           </div>
 
           <div className="mt-6 flex justify-center">

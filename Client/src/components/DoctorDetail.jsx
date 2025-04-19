@@ -52,15 +52,16 @@ const DoctorDetail = (props) => {
         </button>
         {showAvailability && (
           <ul className="mt-2 list-disc text-gray-700 text-left">
-            {Array.isArray(doctor.availability) ? (
-              doctor.availability.map((slot, index) => (
+            {Array.isArray(doctor.availability) &&
+            doctor.availability.length > 0 ? (
+              doctor.availability.map((item, index) => (
                 <li key={index}>
-                  <span className="font-medium">{slot.day}:</span>{" "}
-                  {slot.slots.join(", ")}
+                  <span className="font-medium">{item.day}:</span>{" "}
+                  {item.slots || "Not specified"}
                 </li>
               ))
             ) : (
-              <li>No availability info</li>
+              <li className="text-sm text-gray-500">No availability info</li>
             )}
           </ul>
         )}
