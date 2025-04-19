@@ -19,6 +19,11 @@ const appointmentSchema = mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  status: {
+    type: String,
+    enum: ["active", "canceled"],
+    default: "active"
+  },
 });
 
 const AppointmentModel = mongoose.model("appointments", appointmentSchema);

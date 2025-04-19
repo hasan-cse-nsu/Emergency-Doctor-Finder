@@ -18,7 +18,7 @@ router.post("/doctor/signup", DrController.postDoctors)
 router.post("/doctor/login", DrController.getDoctors)
 
 router.get('/doctor/me', auth, DrController.getDoctorByID)
-// router.put('/doctor/update', auth, DrController.userUpdate)
+router.put('/doctor/update', auth, DrController.doctorUpdate)
 
 router.get("/getAllDoctors", DrController.getAllDoctors)
 
@@ -31,8 +31,6 @@ router.get("/doctor/notifications", auth, DrController.getNotifications)
 router.put("/doctor/notifications/read", auth, DrController.getMarkNotification)
 
 
-
-
 router.post("/signup", UserController.postUsers)
 router.post("/login", UserController.getUsers)
 
@@ -41,7 +39,8 @@ router.put('/user/update', auth, UserController.userUpdate)
 
 router.post("/appointment/:doctorId", auth, DrController.postAppointments)
 router.get("/my-appointments", auth, DrController.getAppointments)
-
+router.put("/appointment/cancel/:id", auth, DrController.cancelAppointments)
+router.delete("/appointment/:id", auth, DrController.deleteAppointments)
 
 
 

@@ -30,6 +30,9 @@ export const getDrService = async (req) => {
     
         const isMatch = await bcrypt.compare(password, doctor.password);
         if (!isMatch) return { status : "Error", error : 'Password mismatch'}
+
+        const isApproved = (doctor.isApproved === true);
+        if (!isApproved) return { status : "Error", error : 'Not yet approved by admin!'}
     
         const token = jwt.sign({ id: doctor._id }, JWT_KEY, { expiresIn: '1d' });
     
@@ -124,6 +127,32 @@ export const getAppointmentsService = async (req) => {
   };
 
 
+  export const cancelAppointmentsService = async (req) => {
+    try {
+        const updated = await AppointmentModel.findByIdAndUpdate(
+            req.params.id,
+            { status: "canceled" },
+            { new: true }
+          );        
+          return { status : "Success", data : updated}
+      } catch (e) {
+        return { status : "Error", error : e.toString()}
+    }
+  };
+
+
+  export const deleteAppointmentsService = async (req) => {
+    try {
+        const updated = await AppointmentModel.findByIdAndDelete(req.params.id);
+
+          return { status : "Success", data : updated}
+      } catch (e) {
+        return { status : "Error", error : e.toString()}
+    }
+  };
+
+
+
   export const getPendingDoctorService = async (req) => {
     try {
         const doctors = await DrModel.find({ isApproved: false });
@@ -181,5 +210,20 @@ export const getMarkNotificationService = async (req) => {
     } catch (e) {
         return { status : "Error", error : e.toString()}
 
+    }
+}
+
+
+export const doctorUpdateService = async (req) => {
+    try {
+        const { name, email, contact, location, specialty, availability, experience, image } = req.body;
+        const updatedDr = await DrModel.findByIdAndUpdate(
+        req.id,
+        { name, email, contact, location, specialty, availability, experience, image },
+        { new: true }
+      );
+      return { status : "Success", data : updatedDr}
+    } catch (e) {
+        return { status : "Error", error : e.toString()}
     }
 }

@@ -17,6 +17,8 @@ import DoctorLoginPage from "./page/DoctorLoginPage";
 import Dashboard from "./components/Dashboard";
 import AdminDashboard from "./components/AdminDashboard";
 import AdminLoginPage from "./page/AdminLoginPage";
+import DoctorDashboard from "./components/DoctorDashboard";
+import UpdateDoctorProfile from "./components/UpdateDoctorProfile";
 
 function App() {
   return (
@@ -27,6 +29,7 @@ function App() {
         <Routes>
           <Route exact path="/" element={<HomePage />} />
           <Route exact path="/updateUser" element={<UpdateUserProfile />} />
+          <Route exact path="/updateDoctor" element={<UpdateDoctorProfile />} />
           <Route exact path="/doctors" element={<DrPage />} />
           <Route path="/doctors/:id" element={<DoctorDetailPage />} />
           <Route
@@ -36,6 +39,7 @@ function App() {
           <Route exact path="/about" element={<AboutPage />} />
           <Route exact path="/contact" element={<ContactPage />} />
           <Route exact path="/dashboard" element={<Dashboard />} />
+          <Route exact path="/doctor/dashboard" element={<DoctorDashboard />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<LoginPage />} />
 

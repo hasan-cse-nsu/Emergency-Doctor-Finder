@@ -1,4 +1,4 @@
-import { getAllSpecialtiesService, getAppointmentsService, getAllDrService, getSearchDrService, postAppointmentsService, postDrService, getDrService, getDrByIDService, getPendingDoctorService, putApprovalDoctorService, getNotificationsService, getMarkNotificationService } from '../service/DrService.js';
+import { getAllSpecialtiesService, getAppointmentsService, getAllDrService, getSearchDrService, postAppointmentsService, postDrService, getDrService, getDrByIDService, getPendingDoctorService, putApprovalDoctorService, getNotificationsService, getMarkNotificationService, cancelAppointmentsService, deleteAppointmentsService, doctorUpdateService } from '../service/DrService.js';
 
 export const postDoctors = async (req, res) => {
 
@@ -61,6 +61,26 @@ export const getAppointments= async (req, res)=>{
       return res.status(201).json({ result });
 }
 
+export const cancelAppointments= async (req, res)=>{
+    
+    let result = await cancelAppointmentsService(req);
+    if (result.status === "Error") {
+        return res.status(400).json({ msg: result.error });
+      }
+      return res.status(201).json({ result });
+}
+
+
+export const deleteAppointments= async (req, res)=>{
+    
+    let result = await deleteAppointmentsService(req);
+    if (result.status === "Error") {
+        return res.status(400).json({ msg: result.error });
+      }
+      return res.status(201).json({ result });
+}
+
+
 
 export const getPendingDoctor = async (req, res) => {
 
@@ -88,4 +108,10 @@ export const getNotifications = async (req, res) => {
     return res.json({result})
   }
 
+
+   export const doctorUpdate = async (req, res) => {
+  
+      let result = await doctorUpdateService(req);
+      return res.json({result})
+    }
 

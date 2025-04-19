@@ -7,6 +7,7 @@ import Layout from "../Layout/Layout";
 
 const Dashboard = () => {
   const [user, setUser] = useState({});
+
   const navigate = useNavigate();
 
   const [appointments, setAppointments] = useState([]);
@@ -41,6 +42,44 @@ const Dashboard = () => {
       .then((res) => setAppointments(res.data.result.data))
       .catch(() => toast.error("Failed to fetch appointments"));
   }, []);
+
+  const handleDelete = async (id) => {
+    const token = localStorage.getItem("token");
+    try {
+      const confirm = window.confirm("Do you want to delete this appointment?");
+      if (!confirm) return;
+
+      await axios.delete(`http://localhost:3030/api/appointment/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setAppointments((prev) => prev.filter((appt) => appt._id !== id));
+      toast.success("Appointment deleted.");
+    } catch (err) {
+      toast.error("Failed to delete appointment.");
+    }
+  };
+
+  const handleCancel = async (id) => {
+    const token = localStorage.getItem("token");
+    try {
+      const confirm = window.confirm("Do you want to cancel this appointment?");
+      if (!confirm) return;
+
+      const res = await axios.put(
+        `http://localhost:3030/api/appointment/cancel/${id}`,
+        {},
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      setAppointments((prev) =>
+        prev.map((appt) =>
+          appt._id === id ? { ...appt, status: "canceled" } : appt
+        )
+      );
+      toast.success("Appointment canceled.");
+    } catch (err) {
+      toast.error("Failed to cancel appointment.");
+    }
+  };
 
   return (
     <Layout>
@@ -78,11 +117,40 @@ const Dashboard = () => {
 
           <ul className="space-y-2">
             {appointments.map((appt) => (
-              <li key={appt._id} className="border p-4 rounded bg-white shadow">
-                <strong>Doctor: </strong> {appt.doctorId.name} <br />
-                <strong>Specialty: </strong> {appt.doctorId.specialty} <br />
-                <strong>Booked On: </strong>
-                {new Date(appt.dateTime).toLocaleString()}
+              <li
+                key={appt._id}
+                className="relative border p-4 rounded bg-white shadow flex justify-between items-start"
+              >
+                <div>
+                  <strong>Doctor: </strong> {appt.doctorId.name} <br />
+                  <strong>Specialty: </strong> {appt.doctorId.specialty} <br />
+                  <strong>Appointment Booked On: </strong>
+                  {new Date(appt.dateTime).toLocaleString()}
+                  <br />
+                  {appt.status === "canceled" ? (
+                    <button
+                      disabled
+                      className="mt-2 bg-red-600 text-white px-4 py-1 rounded text-sm cursor-not-allowed"
+                    >
+                      Canceled
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => handleCancel(appt._id)}
+                      className="mt-2 bg-yellow-500 text-white px-4 py-1 rounded hover:bg-yellow-600 text-sm"
+                    >
+                      Cancel Appointment
+                    </button>
+                  )}
+                </div>
+
+                <button
+                  onClick={() => handleDelete(appt._id)}
+                  className="absolute top-2 right-2 text-red-600 hover:text-red-800 text-lg"
+                  title="Delete Appointment"
+                >
+                  ✖
+                </button>
               </li>
             ))}
           </ul>

@@ -239,7 +239,7 @@ const MenuBar = () => {
                 ) : doctor ? (
                   <div className="flex items-center space-x-4">
                     <Link
-                      to="/dashboard"
+                      to="/doctor/dashboard"
                       className="inline-flex justify-center items-center gap-2 px-4 py-2 bg-purple-700 text-white text-sm font-medium rounded-md hover:bg-purple-800 focus:outline-none"
                     >
                       Dashboard
@@ -277,7 +277,7 @@ const MenuBar = () => {
                         }`}
                       >
                         <Link
-                          to="/updateUser"
+                          to="/UpdateDoctor"
                           className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                         >
                           ✏️ Update Doctor Profile
