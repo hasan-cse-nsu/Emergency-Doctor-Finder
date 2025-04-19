@@ -6,6 +6,8 @@ import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
 
 const UpdateDoctorProfile = () => {
+  const BaseURL = "https://emergency-doctor-finder.onrender.com/api";
+
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -30,7 +32,7 @@ const UpdateDoctorProfile = () => {
 
   const fetchDoctorData = async (token) => {
     try {
-      const res = await axios.get("http://localhost:3030/api/doctor/me", {
+      const res = await axios.get(BaseURL + "/doctor/me", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -47,7 +49,7 @@ const UpdateDoctorProfile = () => {
   const handleUpdate = async () => {
     try {
       await axios.put(
-        "http://localhost:3030/api/doctor/update",
+        BaseURL + "/doctor/update",
         {
           name: form.name,
           email: form.email,

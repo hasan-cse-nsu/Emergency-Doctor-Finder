@@ -5,7 +5,14 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const DoctorSignupForm = () => {
-  const [form, setForm] = useState({ name: "", email: "", specialty: "", password: "" });
+  const BaseURL = "https://emergency-doctor-finder.onrender.com/api";
+
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    specialty: "",
+    password: "",
+  });
   const navigate = useNavigate();
 
   const handleChange = (e) =>
@@ -14,7 +21,7 @@ const DoctorSignupForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:3030/api/doctor/signup", form);
+      await axios.post(BaseURL + "/doctor/signup", form);
       toast.success("✅ Registration successful! You can now log in.");
       setTimeout(() => navigate("/doctor/login"), 1500);
     } catch (err) {
@@ -25,8 +32,6 @@ const DoctorSignupForm = () => {
   };
 
   return (
-    
-
     <div className="flex justify-center items-center h-screen bg-gray-100">
       <form
         onSubmit={handleSubmit}

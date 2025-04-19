@@ -6,6 +6,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const DoctorLoginForm = () => {
+  const BaseURL = "https://emergency-doctor-finder.onrender.com/api";
+
   const [form, setForm] = useState({ email: "", password: "" });
   const navigate = useNavigate();
 
@@ -15,10 +17,7 @@ const DoctorLoginForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post(
-        "http://localhost:3030/api/doctor/login",
-        form
-      );
+      const res = await axios.post(BaseURL + "/doctor/login", form);
       localStorage.setItem("token", res.data.result.data.token);
       toast.success("Login successful!");
       setTimeout(() => navigate("/"), 1500);
@@ -28,8 +27,6 @@ const DoctorLoginForm = () => {
   };
 
   return (
-  
-
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-sm">
         <h2 className="text-2xl font-semibold text-center text-gray-700 mb-6">
@@ -80,7 +77,10 @@ const DoctorLoginForm = () => {
 
         <div className="mt-4 text-center">
           <span className="text-sm text-gray-600">Don't have an account? </span>
-          <Link to="/doctor/signup" className="text-sm text-blue-600 hover:underline">
+          <Link
+            to="/doctor/signup"
+            className="text-sm text-blue-600 hover:underline"
+          >
             Sign Up
           </Link>
         </div>

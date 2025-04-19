@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const AdminLogin = () => {
+  const BaseURL = "https://emergency-doctor-finder.onrender.com/api";
+
   const [form, setForm] = useState({ email: "", password: "" });
   const navigate = useNavigate();
 
@@ -14,10 +16,7 @@ const AdminLogin = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post(
-        "http://localhost:3030/api/admin/login",
-        form
-      );
+      const res = await axios.post(BaseURL + "/admin/login", form);
       localStorage.setItem("adminToken", res.data.result.data);
       toast.success("Admin logged in");
       navigate("/admin/dashboard");

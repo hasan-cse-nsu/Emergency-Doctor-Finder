@@ -6,6 +6,8 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const SignupForm = () => {
+  const BaseURL = "https://emergency-doctor-finder.onrender.com/api";
+
   const [form, setForm] = useState({ name: "", email: "", password: "" });
   const navigate = useNavigate();
 
@@ -15,7 +17,7 @@ const SignupForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:3030/api/signup", form);
+      await axios.post(BaseURL + "/signup", form);
 
       toast.success("✅ Registration successful! You can now log in.");
       setTimeout(() => navigate("/login"), 1500);

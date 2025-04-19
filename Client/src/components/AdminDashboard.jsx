@@ -5,18 +5,17 @@ import { toast } from "react-toastify";
 import Layout from "../Layout/Layout";
 
 const AdminDashboard = () => {
+  const BaseURL = "https://emergency-doctor-finder.onrender.com/api";
+
   const [pendingDoctors, setPendingDoctors] = useState([]);
 
   const fetchPendingDoctors = async () => {
     try {
-      const res = await axios.get(
-        "http://localhost:3030/api/admin/doctors/pending",
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
-          },
-        }
-      );
+      const res = await axios.get(BaseURL + "/admin/doctors/pending", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
+        },
+      });
       setPendingDoctors(res.data.result.data);
     } catch (err) {
       toast.error("Failed to fetch doctors");
@@ -26,7 +25,7 @@ const AdminDashboard = () => {
   const approveDoctor = async (id) => {
     try {
       await axios.put(
-        `http://localhost:3030/api/admin/approve-doctor/${id}`,
+        `${BaseURL}/admin/approve-doctor/${id}`,
         {},
         {
           headers: {

@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const SpecialtySearch = () => {
+  const BaseURL = "https://emergency-doctor-finder.onrender.com/api";
+
   const [specialties, setSpecialties] = useState([]);
   const navigate = useNavigate();
 
@@ -14,7 +16,7 @@ const SpecialtySearch = () => {
 
   const fetchSpecialties = async () => {
     try {
-      const response = await axios.get("http://localhost:3030/api/specialties");
+      const response = await axios.get(BaseURL + "/specialties");
       setSpecialties(response.data.result);
     } catch (error) {
       console.error("Error fetching specialties:", error);

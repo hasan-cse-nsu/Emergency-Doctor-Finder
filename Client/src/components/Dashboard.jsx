@@ -7,6 +7,8 @@ import { useNavigate, Link } from "react-router-dom";
 import Layout from "../Layout/Layout";
 
 const Dashboard = () => {
+  const BaseURL = "https://emergency-doctor-finder.onrender.com/api";
+
   const [user, setUser] = useState({});
   const navigate = useNavigate();
   const [appointments, setAppointments] = useState([]);
@@ -16,7 +18,7 @@ const Dashboard = () => {
     if (!token) return navigate("/login");
 
     axios
-      .get("http://localhost:3030/api/user/me", {
+      .get(BaseURL + "/user/me", {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => setUser(res.data.result.data))
@@ -31,7 +33,7 @@ const Dashboard = () => {
     if (!token) return navigate("/login");
 
     axios
-      .get("http://localhost:3030/api/my-appointments", {
+      .get(BaseURL + "/my-appointments", {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => setAppointments(res.data.result.data))
@@ -44,7 +46,7 @@ const Dashboard = () => {
       const confirm = window.confirm("Do you want to delete this appointment?");
       if (!confirm) return;
 
-      await axios.delete(`http://localhost:3030/api/appointment/${id}`, {
+      await axios.delete(`${BaseURL}/appointment/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setAppointments((prev) => prev.filter((appt) => appt._id !== id));
@@ -61,7 +63,7 @@ const Dashboard = () => {
       if (!confirm) return;
 
       const res = await axios.put(
-        `http://localhost:3030/api/appointment/cancel/${id}`,
+        `${BaseURL}/appointment/cancel/${id}`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );

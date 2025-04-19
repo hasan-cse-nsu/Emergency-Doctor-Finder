@@ -6,12 +6,14 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 const AppointmentModal = ({ doctorId, onClose }) => {
+  const BaseURL = "https://emergency-doctor-finder.onrender.com/api";
+
   const [selectedDate, setSelectedDate] = useState(null);
 
   const handleSubmit = async () => {
     try {
       await axios.post(
-        `http://localhost:3030/api/appointment/${doctorId}`,
+        `${BaseURL}/appointment/${doctorId}`,
         {
           dateTime: selectedDate,
         },

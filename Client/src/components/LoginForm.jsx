@@ -7,6 +7,8 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 const LoginForm = () => {
+  const BaseURL = "https://emergency-doctor-finder.onrender.com/api";
+
   const [form, setForm] = useState({ email: "", password: "" });
   const navigate = useNavigate();
 
@@ -16,7 +18,7 @@ const LoginForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:3030/api/login", form);
+      const res = await axios.post(BaseURL + "/login", form);
       localStorage.setItem("token", res.data.result.data.token);
       toast.success("✅ Login successful! ");
       setTimeout(() => navigate("/"), 1500);

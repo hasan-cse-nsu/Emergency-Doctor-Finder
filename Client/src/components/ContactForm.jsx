@@ -18,7 +18,7 @@ const ContactForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     toast.success("Message sent successfully!");
-    setFormData({ name: "",number: "", email: "", message: "" });
+    setFormData({ name: "", number: "", email: "", message: "" });
   };
 
   return (
@@ -28,8 +28,8 @@ const ContactForm = () => {
           Contact Us
         </h2>
         <p className="text-center text-gray-600 mb-10">
-          Have a question, feedback, or just want to say hi? We would love to hear
-          from you.
+          Have a question, feedback, or just want to say hi? We would love to
+          hear from you.
         </p>
 
         <form

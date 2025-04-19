@@ -41,7 +41,6 @@ const HomePage = () => {
 
       <SpecialtySearch />
 
-      {/* Why Choose Us Section */}
       <section className="py-16 bg-gray-50 px-6">
         <h2 className="text-3xl font-bold text-center text-blue-700 mb-10">
           Why Emergency Doctor Finder?

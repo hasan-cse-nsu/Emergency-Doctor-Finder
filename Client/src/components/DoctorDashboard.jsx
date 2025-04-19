@@ -7,6 +7,9 @@ import { useNavigate, Link } from "react-router-dom";
 import Layout from "../Layout/Layout";
 
 const DoctorDashboard = () => {
+
+  const BaseURL = "https://emergency-doctor-finder.onrender.com/api";
+
   const [doctor, setDoctor] = useState({});
   const navigate = useNavigate();
 
@@ -15,7 +18,7 @@ const DoctorDashboard = () => {
     if (!token) return navigate("/doctor/login");
 
     axios
-      .get("http://localhost:3030/api/doctor/me", {
+      .get(BaseURL + "/doctor/me", {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => setDoctor(res.data.result.data))

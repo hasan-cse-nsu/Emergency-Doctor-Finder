@@ -5,6 +5,8 @@ import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 
 const DoctorsBySpecialty = () => {
+  const BaseURL = "https://emergency-doctor-finder.onrender.com/api";
+
   const { specialty } = useParams();
   const [doctors, setDoctors] = useState([]);
 
@@ -14,9 +16,7 @@ const DoctorsBySpecialty = () => {
 
   const fetchDoctorsBySpecialty = async () => {
     try {
-      const response = await axios.get(
-        `http://localhost:3030/api/search?query=${specialty}`
-      );
+      const response = await axios.get(`${BaseURL}/search?query=${specialty}`);
       setDoctors(response.data.result.data);
     } catch (error) {
       console.error("Error fetching doctors:", error);

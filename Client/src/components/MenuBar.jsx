@@ -5,6 +5,8 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const MenuBar = () => {
+  const BaseURL = "https://emergency-doctor-finder.onrender.com/api";
+
   const [user, setUser] = useState(null);
   const [doctor, setDoctor] = useState(null);
   const [admin, setAdmin] = useState(null);
@@ -32,7 +34,7 @@ const MenuBar = () => {
     setShowSidebar(true);
     try {
       await axios.put(
-        "http://localhost:3030/api/doctor/notifications/read",
+        BaseURL + "/doctor/notifications/read",
         {},
         {
           headers: {
@@ -52,7 +54,7 @@ const MenuBar = () => {
       const token = localStorage.getItem("token");
       if (token) {
         try {
-          const res = await axios.get("http://localhost:3030/api/user/me", {
+          const res = await axios.get(BaseURL + "/user/me", {
             headers: { Authorization: `Bearer ${token}` },
           });
           setUser(res.data.result.data);
@@ -69,7 +71,7 @@ const MenuBar = () => {
       const token = localStorage.getItem("token");
       if (token) {
         try {
-          const res = await axios.get("http://localhost:3030/api/doctor/me", {
+          const res = await axios.get(BaseURL + "/doctor/me", {
             headers: { Authorization: `Bearer ${token}` },
           });
           setDoctor(res.data.result.data);
@@ -94,7 +96,7 @@ const MenuBar = () => {
       const token = localStorage.getItem("adminToken");
       if (token) {
         try {
-          const res = await axios.get("http://localhost:3030/api/admin/me", {
+          const res = await axios.get(BaseURL + "/admin/me", {
             headers: { Authorization: `Bearer ${token}` },
           });
           setAdmin(res.data.result.data);
