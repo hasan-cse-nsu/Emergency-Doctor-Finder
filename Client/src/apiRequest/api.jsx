@@ -11,11 +11,3 @@ export async function getAllDoctors() {
   }
 }
 
-export async function getTeamMember() {
-  let res = await axios.get(BaseURL + "/getTeamMember");
-  if (res.status === 200) {
-    return res.data.result.data;
-  } else {
-    return [];
-  }
-}

@@ -49,7 +49,7 @@ const AdminLogin = () => {
         />
         <button
           type="submit"
-          className="w-full bg-purple-700 text-white py-2 rounded hover:bg-purple-800"
+          className="w-full bg-blue-700 text-white py-2 rounded hover:bg-blue-800"
         >
           Log In
         </button>

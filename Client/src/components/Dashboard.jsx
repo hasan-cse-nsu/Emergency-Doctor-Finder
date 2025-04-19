@@ -1,4 +1,5 @@
 /* eslint-disable no-unused-vars */
+
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -7,12 +8,8 @@ import Layout from "../Layout/Layout";
 
 const Dashboard = () => {
   const [user, setUser] = useState({});
-
   const navigate = useNavigate();
-
   const [appointments, setAppointments] = useState([]);
-
-  // For getting Userdata
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -28,8 +25,6 @@ const Dashboard = () => {
         navigate("/login");
       });
   }, [navigate]);
-
-  // For getting Appointments
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -83,54 +78,66 @@ const Dashboard = () => {
 
   return (
     <Layout>
-      <div className="min-h-[calc(100vh-160px)] flex items-center justify-center bg-gray-100">
-        <div className="bg-white shadow-md rounded-xl p-8 w-full max-w-2xl">
-          <h2 className="text-3xl font-bold mb-4 text-center text-blue-700">
+      <div className="min-h-[calc(100vh-160px)] flex items-center justify-center bg-gray-100 px-4 py-12">
+        <div className="bg-white shadow-lg rounded-lg p-8 w-full max-w-3xl">
+          <h2 className="text-3xl font-bold mb-6 text-center text-blue-700">
             User Dashboard
           </h2>
 
-          <div className="grid grid-cols-1 gap-4 text-gray-700 text-base">
-            <div>
-              <strong>Name:</strong> {user.name}
+          <div className="grid grid-cols-1 gap-4 text-gray-700 text-sm mb-6 bg-blue-50 p-4 rounded-lg shadow-sm">
+            <div className="flex justify-between items-center">
+              <span className="font-semibold text-gray-600">Name:</span>
+              <span>{user.name}</span>
             </div>
-            <div>
-              <strong>Email:</strong> {user.email}
+            <div className="flex justify-between items-center">
+              <span className="font-semibold text-gray-600">Email:</span>
+              <span>{user.email}</span>
             </div>
-            <div>
-              <strong>Phone:</strong> {user.phone || "Not provided"}
+            <div className="flex justify-between items-center">
+              <span className="font-semibold text-gray-600">Phone:</span>
+              <span>{user.phone || "Not provided"}</span>
             </div>
-            <div>
-              <strong>Location:</strong> {user.location || "Not set"}
+            <div className="flex justify-between items-center">
+              <span className="font-semibold text-gray-600">Location:</span>
+              <span>{user.location || "Not set"}</span>
             </div>
           </div>
 
-          <div className="mt-6 flex justify-center">
+          <div className="flex justify-center mb-8">
             <Link
               to="/updateUser"
-              className="bg-blue-600 text-white px-5 py-2 rounded-md hover:bg-blue-700"
+              className="bg-blue-600 text-white px-5 py-2 rounded-md hover:bg-blue-700 transition"
             >
               ✏️ Edit Profile
             </Link>
           </div>
 
-          <h3 className="text-xl font-semibold mb-2">Your Appointments</h3>
+          <h3 className="text-xl font-semibold mb-4 text-blue-700">
+            Your Appointments
+          </h3>
 
-          <ul className="space-y-2">
+          <ul className="space-y-4">
             {appointments.map((appt) => (
               <li
                 key={appt._id}
-                className="relative border p-4 rounded bg-white shadow flex justify-between items-start"
+                className="relative border p-4 rounded-lg bg-gray-50 shadow-md flex justify-between items-start"
               >
                 <div>
-                  <strong>Doctor: </strong> {appt.doctorId.name} <br />
-                  <strong>Specialty: </strong> {appt.doctorId.specialty} <br />
-                  <strong>Appointment Booked On: </strong>
-                  {new Date(appt.dateTime).toLocaleString()}
-                  <br />
+                  <p>
+                    <strong>Doctor:</strong> {appt.doctorId.name}
+                  </p>
+                  <p>
+                    <strong>Specialty:</strong> {appt.doctorId.specialty}
+                  </p>
+                  <p>
+                    <strong>Appointment On:</strong>{" "}
+                    {new Date(appt.dateTime).toLocaleString()}
+                  </p>
+
                   {appt.status === "canceled" ? (
                     <button
                       disabled
-                      className="mt-2 bg-red-600 text-white px-4 py-1 rounded text-sm cursor-not-allowed"
+                      className="mt-2 bg-red-500 text-white px-4 py-1 rounded text-sm cursor-not-allowed"
                     >
                       Canceled
                     </button>

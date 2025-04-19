@@ -1,6 +1,5 @@
 import express from "express"
 import * as DrController from "../controllers/DrController.js"
-import * as TeamController from "../controllers/TeamController.js"
 import * as UserController from "../controllers/UserController.js"
 import * as AdminController from "../controllers/AdminController.js"
 import auth from "../middlewares/AuthMiddleware.js";
@@ -44,9 +43,6 @@ router.delete("/appointment/:id", auth, DrController.deleteAppointments)
 
 
 
-
-router.post("/postTeamMember", TeamController.postTeamMember)
-router.get("/getTeamMember", TeamController.getTeamMember)
 
 
 

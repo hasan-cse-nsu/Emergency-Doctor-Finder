@@ -1,4 +1,5 @@
 /* eslint-disable no-unused-vars */
+
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -25,19 +26,25 @@ const SpecialtySearch = () => {
   };
 
   return (
-    <div className="container mx-auto p-6">
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {specialties.map((specialty, index) => (
-          <div
-            key={index}
-            className="border rounded-lg p-6 shadow-lg bg-white cursor-pointer transition-transform hover:scale-105 hover:shadow-xl"
-            onClick={() => handleSpecialtyClick(specialty)}
-          >
-            <h3 className="text-xl font-semibold text-blue-600 text-center">
-              {specialty}
-            </h3>
-          </div>
-        ))}
+    <div className="bg-gray-50 min-h-screen py-16 px-4 md:px-8 lg:px-20">
+      <div className="max-w-7xl mx-auto">
+        <h2 className="text-3xl md:text-4xl font-bold text-blue-700 text-center mb-10">
+          Browse by Specialty
+        </h2>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {specialties.map((specialty, index) => (
+            <div
+              key={index}
+              onClick={() => handleSpecialtyClick(specialty)}
+              className="bg-white p-6 rounded-lg shadow hover:shadow-md transition transform hover:scale-105 cursor-pointer text-center"
+            >
+              <h3 className="text-xl font-semibold text-blue-700">
+                {specialty}
+              </h3>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

@@ -17,7 +17,7 @@ const DrPage = () => {
   return (
     <>
       <Layout>
-        <DoctorList list={list} />
+        <DoctorList doctors={list} />
       </Layout>
     </>
   );
